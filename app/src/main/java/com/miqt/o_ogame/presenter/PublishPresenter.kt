@@ -1,7 +1,11 @@
 package com.miqt.o_ogame.presenter
 
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.miqt.miwrenchlib.MNetUtils
 import com.miqt.o_ogame.entity.Data
 import com.miqt.o_ogame.entity.Device
 import com.miqt.o_ogame.net.AUdpReceive
@@ -10,7 +14,7 @@ import com.miqt.o_ogame.view.IDevListView
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PublishPresenter(private val dlview: IDevListView) : IUdpPublishPresenter {
+class PublishPresenter(private val dlview: IDevListView, private val mContext: Context) : IUdpPublishPresenter {
 
     private val mReceiver = ArrayList<IUdpPublishPresenter.PublishReceiver>()
     private val mDevList = ArrayList<Device>()
@@ -18,7 +22,7 @@ class PublishPresenter(private val dlview: IDevListView) : IUdpPublishPresenter 
     private val udpReceiver = object : AUdpReceive() {
         override fun onRecerver(message: String) {
             val data = Gson().fromJson(message, Data::class.java)
-            when (data.type) {
+            when (data.what) {
                 Data.TYPE_DEVICE_INFO -> {
                     val devInfo: Device? = Gson().fromJson<Data<Device>>(message, object : TypeToken<Data<Device>>() {}.type).data
                     if (devInfo != null) {
@@ -32,6 +36,7 @@ class PublishPresenter(private val dlview: IDevListView) : IUdpPublishPresenter 
                         }
                         mDevList.filter { it.ip != devInfo.ip }
                                 .forEach { addDivList(devInfo) }
+                        val optn = BitmapFactory.Options()
                     }
                 }
             }
@@ -58,6 +63,9 @@ class PublishPresenter(private val dlview: IDevListView) : IUdpPublishPresenter 
         mTimer = Timer()
         mTimer.schedule(object : TimerTask() {
             override fun run() {
+                val name = Build.MODEL
+                val ip = MNetUtils.getIPAddress(mContext)
+                val port = Build.MODEL
                 val dev = Device("huawei", "ip", "port").copy()
                 val data = Data(Data.TYPE_DEVICE_INFO, dev)
                 val str = Gson().toJson(data)
