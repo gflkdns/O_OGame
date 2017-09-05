@@ -15,14 +15,16 @@ class TcpServerThread(val s: Socket) : Thread() {
 
     override fun run() {
         super.run()
+        //<editor-fold desc="先问问要干什么">
         val inp = s.getInputStream()
         val ir = InputStreamReader(inp)
         val reader = BufferedReader(ir)
         val json = reader.readLine()
+        //</editor-fold>
         val data = Gson().fromJson<Data<Device>>(json, object : TypeToken<Data<String>>() {}.type)
         when (data.what) {
-            Data.TYPE_REQUEST_TCP_CONN -> {
-                //
+            Data.TYPE_TCP_CHAT_MESSAGE -> {//tcp聊天消息
+                val message = data.data
             }
         }
     }

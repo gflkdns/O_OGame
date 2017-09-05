@@ -12,6 +12,6 @@ data class Data<T>(val what: Int, val data: T) {
         /**
          * 请求tcp连接
          */
-        val TYPE_REQUEST_TCP_CONN = 0x2
+        val TYPE_TCP_CHAT_MESSAGE = 0x2
     }
 }

@@ -23,7 +23,7 @@ class TcpService : Service() {
         var runing = true
         lateinit var ss: ServerSocket
         /**
-         * 启动一个Tcp服务器，一直等着接收消息
+         * 启动一个服务，一直等着接收消息
          */
         fun start() {
             Thread {
