@@ -24,7 +24,7 @@ class TcpServerThread(val s: Socket) : Thread() {
         val data = Gson().fromJson<Data<Device>>(json, object : TypeToken<Data<String>>() {}.type)
         when (data.what) {
             Data.TYPE_TCP_CHAT_MESSAGE -> {//tcp聊天消息
-                val message = data.data
+                val msgjson = data.data
             }
         }
     }
