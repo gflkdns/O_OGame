@@ -18,8 +18,11 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
 
     private val mReceiver = ArrayList<IUdpPublishPresenter.PublishReceiver>()
     private val mDevList = ArrayList<Device>()
-    private val udpsend = UdpSend()
-    private val udpReceiver = object : AUdpReceive() {
+    private val udpsend = UdpSend(mContext)
+    init {
+
+    }
+    private val udpReceiver = object : AUdpReceive(mContext) {
         override fun onRecerver(message: String) {
             val data = Gson().fromJson(message, Data::class.java)
             when (data.what) {
@@ -66,7 +69,7 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
                 val name = Build.MODEL
                 val ip = MNetUtils.getIPAddress(mContext)
                 val port = Build.MODEL
-                val dev = Device("huawei", "ip", "port").copy()
+                val dev = Device(name, ip, port).copy()
                 val data = Data(Data.TYPE_DEVICE_INFO, dev)
                 val str = Gson().toJson(data)
                 publish(str)
@@ -77,6 +80,8 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
     override fun stop() {
         mTimer.purge()
         mTimer.cancel()
+        udpReceiver.close()
+        udpsend.close()
     }
 
     override fun publish(text: String) {

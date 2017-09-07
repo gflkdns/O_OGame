@@ -1,5 +1,7 @@
 package com.miqt.o_ogame.net
 
+import android.content.Context
+import android.net.wifi.WifiManager
 import com.miqt.miwrenchlib.MNetUtils
 import com.miqt.o_ogame.cfg
 import java.io.IOException
@@ -11,10 +13,18 @@ import java.net.MulticastSocket
  * Created by Administrator on 2017/8/31.
  */
 class UdpSend : ISend {
-    val socket = MulticastSocket(cfg.udp_port)
+    var socket: MulticastSocket
+    lateinit var multicastLock: WifiManager.MulticastLock
+    constructor()
+    constructor(context: Context) {
+        val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        multicastLock = wifiManager.createMulticastLock("multicast.test")
+        multicastLock.acquire()
+    }
 
     init {
-        socket.setTimeToLive(1)
+
+        socket = MulticastSocket(cfg.udp_port)
         val address = InetAddress.getByName(cfg.udp_ip)
         socket.joinGroup(address)
     }
@@ -31,5 +41,6 @@ class UdpSend : ISend {
 
     override fun close() {
         socket.close()
+        multicastLock.release()
     }
 }
