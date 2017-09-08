@@ -18,11 +18,13 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
 
     private val mReceiver = ArrayList<IUdpPublishPresenter.PublishReceiver>()
     private val mDevList = ArrayList<Device>()
-    private val udpsend = UdpSend(mContext)
+    private val udpsend = UdpSend()
+
     init {
 
     }
-    private val udpReceiver = object : AUdpReceive(mContext) {
+
+    private val udpReceiver = object : AUdpReceive() {
         override fun onRecerver(message: String) {
             val data = Gson().fromJson(message, Data::class.java)
             when (data.what) {
@@ -32,14 +34,9 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
                         if (mDevList.size == 0) {
                             addDivList(devInfo)
                         }
-                        for (i in mDevList) {
-                            if (i.ip != devInfo.ip) {
-                                addDivList(devInfo)
-                            }
-                        }
-                        mDevList.filter { it.ip != devInfo.ip }
+                        mDevList
+                                .filter { it.ip != devInfo.ip }
                                 .forEach { addDivList(devInfo) }
-                        val optn = BitmapFactory.Options()
                     }
                 }
             }

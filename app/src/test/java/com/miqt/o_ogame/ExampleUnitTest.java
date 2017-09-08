@@ -19,7 +19,7 @@ public class ExampleUnitTest {
            @Override
            public void run() {
               while (true){
-                  new UdpSend().send("100");
+                  new UdpSend().send("{\"ip\":\"192.168.1.123\",\"name\":\"test-rk3399\",\"port\":\"test-rk3399\"}");
                   try {
                       Thread.sleep(2000);
                   } catch (InterruptedException e) {
@@ -31,7 +31,7 @@ public class ExampleUnitTest {
         new AUdpReceive(){
             @Override
             public void onRecerver(String message) {
-                System.out.print(message);
+                System.out.println(message);
             }
         }.join();
     }

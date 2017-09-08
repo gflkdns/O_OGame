@@ -9,17 +9,7 @@ import java.nio.charset.Charset
 import android.net.wifi.WifiManager.MulticastLock
 import android.net.wifi.WifiManager
 
-
-/**
- * Created by Administrator on 2017/8/31.
- */
 abstract class AUdpReceive : IReceive {
-    constructor()
-    constructor( context: Context){
-        val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        multicastLock = wifiManager.createMulticastLock("multicast.test")
-        multicastLock.acquire()
-    }
     lateinit var multicastLock: MulticastLock
     var socket:MulticastSocket
     init {
