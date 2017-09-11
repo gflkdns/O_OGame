@@ -1,11 +1,7 @@
 package com.miqt.o_ogame.presenter
 
 import com.miqt.o_ogame.entity.Device
-import java.util.*
 
-/**
- * Created by Administrator on 2017/9/1.
- */
 interface IUdpPublishPresenter {
     /**
      * 发送广播

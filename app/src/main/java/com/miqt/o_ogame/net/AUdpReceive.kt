@@ -1,34 +1,31 @@
 package com.miqt.o_ogame.net
 
-import android.content.Context
 import com.miqt.o_ogame.cfg
 import java.net.DatagramPacket
 import java.net.InetAddress
 import java.net.MulticastSocket
 import java.nio.charset.Charset
-import android.net.wifi.WifiManager.MulticastLock
-import android.net.wifi.WifiManager
 
 abstract class AUdpReceive : IReceive {
-    lateinit var multicastLock: MulticastLock
-    var socket:MulticastSocket
-    init {
-        socket = MulticastSocket(cfg.udp_port)
-    }
+    private var socket: MulticastSocket = MulticastSocket(cfg.udp_port)
+
+    var runing = true
+
     override fun join() {
+        runing = true
         val address = InetAddress.getByName(cfg.udp_ip)
         socket.joinGroup(address)
         val buf = ByteArray(1024)
         val p = DatagramPacket(buf, buf.size, address, cfg.udp_port)
-        while (!socket.isClosed) {
+        while (!socket.isClosed && runing) {
             socket.receive(p)
             val str = String(p.data, Charset.forName("UTF-8")).trimEnd().split("\n".toRegex())
             onRecerver(str[0])
         }
+        socket.close()
     }
 
     override fun close() {
-        socket.close()
-        multicastLock.release()
+        runing = false
     }
 }

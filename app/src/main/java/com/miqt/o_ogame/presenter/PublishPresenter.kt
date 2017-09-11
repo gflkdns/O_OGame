@@ -6,6 +6,7 @@ import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.miqt.miwrenchlib.MNetUtils
+import com.miqt.o_ogame.cfg
 import com.miqt.o_ogame.entity.Data
 import com.miqt.o_ogame.entity.Device
 import com.miqt.o_ogame.net.AUdpReceive
@@ -34,9 +35,9 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
                         if (mDevList.size == 0) {
                             addDivList(devInfo)
                         }
-                        mDevList
-                                .filter { it.ip != devInfo.ip }
-                                .forEach { addDivList(devInfo) }
+                        if (!mDevList.any { it.ip == devInfo.ip }) {
+                            addDivList(devInfo)
+                        }
                     }
                 }
             }
@@ -71,7 +72,7 @@ class PublishPresenter(private val dlview: IDevListView, private val mContext: C
                 val str = Gson().toJson(data)
                 publish(str)
             }
-        }, time, 1000)
+        }, time, cfg.rhythm)
     }
 
     override fun stop() {

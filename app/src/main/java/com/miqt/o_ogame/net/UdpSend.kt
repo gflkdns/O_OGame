@@ -14,7 +14,6 @@ import java.net.MulticastSocket
  */
 class UdpSend : ISend {
     var socket: MulticastSocket
-    lateinit var multicastLock: WifiManager.MulticastLock
     init {
         socket = MulticastSocket(cfg.udp_port)
         val address = InetAddress.getByName(cfg.udp_ip)
@@ -30,6 +29,5 @@ class UdpSend : ISend {
 
     override fun close() {
         socket.close()
-        multicastLock.release()
     }
 }
