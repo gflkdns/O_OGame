@@ -34,9 +34,7 @@ class DevListActivity : AppCompatActivity(), IDevListView, EasyPermissions.Permi
     private fun openMulticastLock() {
         wifiManager = getSystemService(Context.WIFI_SERVICE) as WifiManager
         multicastLock = wifiManager.createMulticastLock("multicast.test")
-        multicastLock.isHeld
         multicastLock.acquire()
-        multicastLock.isHeld
     }
 
 
