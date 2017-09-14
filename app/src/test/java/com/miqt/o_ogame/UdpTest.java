@@ -26,7 +26,7 @@ public class UdpTest {
             public void run() {
                 while (true) {
                     String name = "test——2";
-                    String ip = "10.2.2.3";
+                    String ip = "10.2.2.1";
                     String port = cfg.INSTANCE.getTcp_port() + "";
                     Device dev = new Device(name, ip, port);
                     Data data = new Data<>(Data.Companion.getTYPE_DEVICE_INFO(), dev);

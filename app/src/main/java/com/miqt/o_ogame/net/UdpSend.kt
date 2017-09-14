@@ -16,6 +16,7 @@ class UdpSend : ISend {
     var socket: MulticastSocket
     init {
         socket = MulticastSocket(cfg.udp_port)
+        socket.timeToLive=32
         val address = InetAddress.getByName(cfg.udp_ip)
         socket.joinGroup(address)
     }

@@ -13,6 +13,7 @@ abstract class AUdpReceive : IReceive {
 
     override fun join() {
         runing = true
+        socket.timeToLive=32
         val address = InetAddress.getByName(cfg.udp_ip)
         socket.joinGroup(address)
         val buf = ByteArray(1024)
