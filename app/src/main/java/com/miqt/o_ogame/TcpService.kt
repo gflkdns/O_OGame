@@ -7,6 +7,9 @@ import android.os.IBinder
 import com.miqt.o_ogame.net.ITcpServer
 import com.miqt.o_ogame.net.ITcpClient
 import com.miqt.o_ogame.thread.TcpServerThread
+import java.io.BufferedWriter
+import java.io.IOException
+import java.io.OutputStreamWriter
 import java.net.ServerSocket
 import java.net.Socket
 
@@ -18,8 +21,14 @@ class TcpService : Service() {
     }
 
     inner class TcpBinder : Binder(), ITcpServer, ITcpClient {
+        private lateinit var sc: Socket
+        private var isConnector = false
         var runing = true
         lateinit var ss: ServerSocket
+
+        override fun isConnected(): Boolean {
+            return isConnector
+        }
 
         override fun stop() {
             Thread {
@@ -39,25 +48,37 @@ class TcpService : Service() {
             }.start()
         }
 
-        lateinit var sc: Socket
         override fun connector(address: String, port: Int) {
-            sc=Socket(address,port)
-          //  sc.connect(address)
+            Thread {
+                try {
+                    sc = Socket(address, port)
+                    isConnector = true
+                } catch (e: IOException) {
+                    isConnector = false
+                }
+
+            }.start()
         }
 
-
         override fun send(data: String) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            Thread {
+                if (isConnector) {
+                    synchronized(sc.isClosed) {
+                        val out = sc.getOutputStream()
+                        val osw = OutputStreamWriter(out)
+                        val buffw = BufferedWriter(osw)
+                        buffw.write(data)
+                        buffw.flush()
+                        buffw.close()
+                    }
+                }
+            }.start()
         }
 
         override fun close() {
-
+            Thread {
+                sc.close()
+            }.start()
         }
-
-        override fun isConnected() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-
     }
 }

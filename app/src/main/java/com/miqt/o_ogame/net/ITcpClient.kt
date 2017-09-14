@@ -5,20 +5,20 @@ interface ITcpClient {
     /**
      * 连接
      */
-     fun connector(address: String, port: Int)
+    fun connector(address: String, port: Int)
 
     /**
      * 发送消息
      */
-     fun send(data: String)
+    fun send(data: String)
 
     /**
      * 关闭
      */
-     fun close()
+    fun close()
 
     /**
      * 是否已经连接
      */
-     fun isConnected()
+    fun isConnected(): Boolean
 }
