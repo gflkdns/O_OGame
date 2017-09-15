@@ -3,8 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.miqt.o_ogame.view.O_OGame
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:layout_height="60dp"></LinearLayout>
+
+    <Button
+        android:id="@+id/bt_wifi"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:text="WiFi连接"
+        android:textSize="22sp"
+        android:layout_marginStart="73dp"
+        android:onClick="onMenuClick"/>
 </RelativeLayout>
