@@ -1,9 +1,10 @@
-package com.miqt.o_ogame
+package com.miqt.o_ogame.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import com.miqt.o_ogame.cfg
 import com.miqt.o_ogame.net.ITcpServer
 import com.miqt.o_ogame.net.ITcpClient
 import com.miqt.o_ogame.thread.TcpServerThread

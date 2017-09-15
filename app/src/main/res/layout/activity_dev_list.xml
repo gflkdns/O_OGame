@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.miqt.o_ogame.DevListActivity">
+    tools:context="com.miqt.o_ogame.activity.DevListActivity">
 
     <ListView
         android:id="@+id/lv_dev"

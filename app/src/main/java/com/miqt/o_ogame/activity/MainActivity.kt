@@ -1,8 +1,9 @@
-package com.miqt.o_ogame
+package com.miqt.o_ogame.activity
 
 import android.hardware.*
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.miqt.o_ogame.R
 
 class MainActivity : AppCompatActivity() {
 

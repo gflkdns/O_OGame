@@ -1,4 +1,4 @@
-package com.miqt.o_ogame
+package com.miqt.o_ogame.activity
 
 import android.Manifest
 import android.content.Context
@@ -12,6 +12,7 @@ import com.miqt.o_ogame.view.IDevListView
 import pub.devrel.easypermissions.EasyPermissions
 import android.net.wifi.WifiManager.MulticastLock
 import android.net.wifi.WifiManager
+import com.miqt.o_ogame.R
 
 
 class DevListActivity : AppCompatActivity(), IDevListView, EasyPermissions.PermissionCallbacks {

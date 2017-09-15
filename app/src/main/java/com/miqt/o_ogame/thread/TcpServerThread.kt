@@ -2,10 +2,9 @@ package com.miqt.o_ogame.thread
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.miqt.o_ogame.AppBus
+import com.miqt.o_ogame.app.AppBus
 import com.miqt.o_ogame.entity.Bullet
 import com.miqt.o_ogame.entity.Data
-import com.miqt.o_ogame.entity.Device
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.Socket

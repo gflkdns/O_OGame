@@ -1,4 +1,4 @@
-package com.miqt.o_ogame
+package com.miqt.o_ogame.app
 
 import android.app.Application
 
